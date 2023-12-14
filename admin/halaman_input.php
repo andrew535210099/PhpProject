@@ -6,6 +6,26 @@ $kutipan = "";
 $error = "";
 $sukses = "";
 
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+}else{
+    $id = "";
+}
+
+if($id != ''){
+    $sql1 = "select * from halaman where '$id'";
+    $q1 = mysqli_query($koneksi, $sql1);
+    $r1 = mysqli_fetch_array($q1);
+    $judul = $r1['judul'];
+    $kutipan = $r1['kutipan'];
+    $isi = $r1['isi'];
+
+    if($isi == ''){
+        $error = "Data tidak ditemukan";
+    }
+}
+
+
 if (isset($_POST['simpan'])) {
     $judul = $_POST['judul'];
     $isi = $_POST['isi'];
@@ -16,7 +36,12 @@ if (isset($_POST['simpan'])) {
     }
 
     if (empty($error)) {
-        $sql1 = "insert into halaman(judul, kutipan, isi) values('$judul','$kutipan', '$isi')";
+        if($id != ""){
+            $sql1 = "update halaman set judul = '$judul', kutipan = '$kutipan', isi = '$isi', tgl_isi=now() where id='$id' ";
+        }
+        else{
+            $sql1 = "insert into halaman(judul, kutipan, isi) values('$judul','$kutipan', '$isi')";
+        }
         $q1 = mysqli_query($koneksi, $sql1);
         if ($q1) {
             $sukses = "Sukses memasukkan data";

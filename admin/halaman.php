@@ -1,6 +1,23 @@
 <?php include("inc_header.php") ?>
 <?php
+$sukses = "";
 $katakunci = (isset($_GET['katakunci'])) ? $_GET['katakunci'] : "";
+if(isset($_GET['op'])){
+    $op = $_GET['op'];
+}else{
+    $op = "";
+}
+if($op == 'delete'){
+    $id =$_GET['id'];
+    $sql1 = "delete from halaman where id = '$id'";
+    $q1 = mysqli_query($koneksi, $sql1);
+    $stmt = mysqli_prepare($koneksi, $sql1);
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    $q1 = mysqli_stmt_execute($stmt);
+    if($q1){
+        $sukses = "Data berhasil dihapus";
+    }
+}
 ?>
 <h1>Halaman Admin</h1>
 <p>
@@ -8,6 +25,14 @@ $katakunci = (isset($_GET['katakunci'])) ? $_GET['katakunci'] : "";
         <input type="button" class="btn btn-primary" value="Buat Halaman Baru">
     </a>
 </p>
+<?php
+if($sukses){
+    ?>
+    <div class="alert alert-primary" role="alert">
+        <?php echo $sukses ?>
+    <?php
+}
+?>
 <form class="row g-3" method="get">
     <div class="col-auto">
         <input type="text" class="form-control" placeholder="Masukkan kata kunci" name="katakunci" value="<?php echo $katakunci ?>" />
@@ -28,6 +53,7 @@ $katakunci = (isset($_GET['katakunci'])) ? $_GET['katakunci'] : "";
     <tbody>
         <?php
         $sqltambahan = "";
+        $per_halaman = 2;
         if($katakunci != ''){
             $array_katakunci = explode(" ", $katakunci);
             for($x=0;$x<count($array_katakunci);$x++){
@@ -35,9 +61,20 @@ $katakunci = (isset($_GET['katakunci'])) ? $_GET['katakunci'] : "";
             }
             $sqltambahan = "where ".implode(" or ", $sqlcari);
         }
-        $sql1 = "select * from halaman $sqltambahan order by id desc";
+        $sql1 = "select * from halaman $sqltambahan";
+        $page = isset($_GET['page'])?(int)$_GET['page'] : 1;
+        $mulai = ($page>1) ? ($page * $per_halaman ) - $per_halaman : 0;
         $q1 = mysqli_query($koneksi, $sql1);
-        $nomor = 1;
+        $total = mysqli_num_rows($q1);
+        $pages = ceil($total/$per_halaman);
+        $nomor = $mulai + 1;
+        $sql1 = $sql1." order by id desc limit $mulai, $per_halaman";
+        $q1 = mysqli_query($koneksi, $sql1);
+        if (!$q1) {
+            // Check for query execution error
+            die("Query failed: " . mysqli_error($koneksi));
+        }
+
         while ($r1 = mysqli_fetch_array($q1)) {
         ?>
             <tr>
@@ -45,8 +82,10 @@ $katakunci = (isset($_GET['katakunci'])) ? $_GET['katakunci'] : "";
                 <td><?php echo $r1['judul'] ?></td>
                 <td><?php echo $r1['kutipan'] ?></td>
                 <td>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn btn-warning text-dark">Edit</button>
+                    <a href="halaman_input.php?id=<?php echo $r1['id']?> ">
+                    <span class="badge bg-warning text-dark">Edit</span>
+                    <a href="halaman.php?op=delete&id=<?php echo $r1['id']?>" onclick="return confirm('Apakah yakin mau hapus?')">
+                    <span class="badge bg-danger">Delete</span>
                 </td>
             </tr>
         <?php
@@ -54,4 +93,20 @@ $katakunci = (isset($_GET['katakunci'])) ? $_GET['katakunci'] : "";
         ?>
     </tbody>
 </table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <?php
+        $cari = (isset($_GET['cari']))?$_GET['cari'] : "";
+        for($i=1 ; $i<= $pages ; $i++){
+            ?>
+            <li class="page-item">
+                <a class="page-link" href="halaman.php?katakunci=<?php echo $katakunci ?> & cari= <?php echo $cari ?> & page= <?php echo $i?>"></a>
+            </li>
+            <?php
+        }
+        ?>
+    </ul>
+</nav>
+
 <?php include("inc_footer.php") ?>
