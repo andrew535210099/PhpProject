@@ -30,4 +30,32 @@ function ambil_gambar($id_tulisan){
         return null;
     }
 }
+
+function ambil_kutipan($id_tulisan) {
+    global $koneksi;
+    $sql1 = "SELECT * FROM halaman WHERE id = '$id_tulisan'";
+    $q1 = mysqli_query($koneksi, $sql1);
+    $r1 = mysqli_fetch_array($q1);
+    $text = $r1['kutipan'];
+    return $text;
+}
+
+function ambil_judul($id_tulisan) {
+    global $koneksi;
+    $sql1 = "SELECT * FROM halaman WHERE id = '$id_tulisan'";
+    $q1 = mysqli_query($koneksi, $sql1);
+    $r1 = mysqli_fetch_array($q1);
+    $text = $r1['judul'];
+    return $text;
+}
+
+function ambil_isi($id_tulisan) {
+    global $koneksi;
+    $sql1 = "SELECT * FROM halaman WHERE id = '$id_tulisan'";
+    $q1 = mysqli_query($koneksi, $sql1);
+    $r1 = mysqli_fetch_array($q1);
+    $text = strip_tags($r1['isi']);
+    return $text;
+}
+
 ?>

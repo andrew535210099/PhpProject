@@ -29,12 +29,11 @@ include_once("inc/inc_koneksi.php");
     <div class="wrapper">
         <!-- untuk home -->
         <section id="home">
-            <?php echo ambil_gambar('6')?>
-            <img src="<?php echo ambil_gambar('6')?>"/>
+            <img src="<?php echo ambil_gambar('7')?>"/>
             <div class="kolom">
-                <p class="deskripsi">Belajar Programming #dirumahaja</p>
-                <h2>Tetap Sehat, Tetap Semangat</h2>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt, nobis.</p>
+                <p class="deskripsi"> <?php echo ambil_kutipan('7') ?> </p>
+                <h2><?php echo ambil_judul('7') ?> </h2>
+                <?php echo ambil_isi('7') ?>
                 <p><a href="" class="tbl-pink">Pelajari Lebih Lanjut</a></p>
             </div>
         </section>
