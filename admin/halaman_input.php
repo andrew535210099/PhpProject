@@ -90,7 +90,7 @@ if ($sukses) {
     <div class="mb-3 row">
         <label for="isi" class="col-sm-2 col-form-label">Isi</label>
         <div class="col-sm-10">
-            <textarea name="isi" class="form-control"><?php echo $isi ?></textarea>
+            <textarea name="isi" class="form-control" id="summernote"><?php echo $isi ?></textarea>
         </div>
     </div>
     <div class="mb-3 row">
