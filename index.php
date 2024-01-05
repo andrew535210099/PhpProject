@@ -1,32 +1,4 @@
-<?php
-include_once("inc/inc_fungsi.php");
-include_once("inc/inc_koneksi.php");
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programming di RumahRafif.</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <nav>
-        <div class="wrapper">
-            <div class="logo"><a href=''>RumahRafif.</a></div>
-            <div class="menu">
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#courses">Courses</a></li>
-                    <li><a href="#tutors">Tutors</a></li>
-                    <li><a href="#partners">Partners</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="" class="tbl-biru">Sign Up</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="wrapper">
+<?php include_once("inc_header.php") ?>;
         <!-- untuk home -->
         <section id="home">
             <img src="<?php echo ambil_gambar('7')?>"/>
@@ -34,20 +6,18 @@ include_once("inc/inc_koneksi.php");
                 <p class="deskripsi"> <?php echo ambil_kutipan('7') ?> </p>
                 <h2><?php echo ambil_judul('7') ?> </h2>
                 <?php echo ambil_isi('7') ?>
-                <p><a href="" class="tbl-pink">Pelajari Lebih Lanjut</a></p>
+                <p><a href="<?php echo buat_link_halaman('7')?>" class="tbl-pink">Pelajari Lebih Lanjut</a></p>
             </div>
         </section>
 
         <!-- untuk courses -->
         <section id="courses">
             <div class="kolom">
-                <p class="deskripsi">You Will Need This</p>
-                <h2>Online Courses</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed deserunt voluptatibus possimus blanditiis reiciendis. Qui, facilis! Delectus exercitationem dolores sapiente?</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed deserunt voluptatibus possimus blanditiis reiciendis. Qui, facilis! Delectus exercitationem dolores sapiente?</p>
-                <p><a href="" class="tbl-biru">Pelajari Lebih Lanjut</a></p>
+                <p class="deskripsi"><?php echo ambil_kutipan('7')?></p>
+                <h2><?php echo ambil_judul('7') ?> </h2>
+                <?php echo ambil_isi('7') ?>
             </div>
-            <img src="https://img.freepik.com/free-vector/online-learning-isometric-concept_1284-17947.jpg?size=626&ext=jpg&ga=GA1.2.1769275626.1605867161"/>
+            <img src="<?php echo ambil_gambar('7')?>"/>
         </section>
 
         <!-- untuk tutors -->
@@ -108,54 +78,5 @@ include_once("inc/inc_koneksi.php");
                 </div>
             </div>
         </section>
-    </div>
 
-    <div id="contact">
-        <div class="wrapper">
-            <div class="footer">
-                <div class="footer-section">
-                    <h3>RumahRafif.</h3>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, culpa!</p>
-                </div>
-                <div class="footer-section">
-                    <h3>About</h3>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, culpa!</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p>Jl. Laksda Adisucipto Sleman Yogyakarta</p>
-                    <p>Kode Pos: 57365</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Social</h3>
-                    <p><b>YouTube: </b>Programming di RumahRafif</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="copyright">
-        <div class="wrapper">
-            &copy; 2020. <b>RumahRafif.</b> All Rights Reserved.
-        </div>
-    </div>
-
-    <!-- <div>
-        <?php
-        $sql1 = "select * from halaman";
-        $q1 = mysqli_query($koneksi, $sql1);
-        while($r1 = mysqli_fetch_array($q1)){
-            ?>
-            <div class="kolom">
-                <h2><?php echo $r1['judul'] ?></h2>
-                <p><?php echo $r1['kutipan'] ?></p>
-                <p><?php echo $r1['isi'] ?></p>
-            </div>
-            <?php
-        }
-        ?>
-        
-    </div> -->
-    
-</body>
-</html>
+        <?php include_once("inc_footer.php")?>
