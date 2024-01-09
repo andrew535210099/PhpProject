@@ -1,65 +1,4 @@
 <?php include("inc_header.php") ?>
-<style>
-    table {
-        width: 600px;
-    }
-
-    @media screen and (max-width: 700px) {
-        table {
-            width: 90%;
-        }
-    }
-
-    table td {
-        padding: 5px;
-    }
-
-    td.label {
-        width: 40%;
-    }
-
-    .input {
-        border: 1px solid #CCCCCC;
-        background-color: #dfdfdf;
-        border-radius: 5px;
-        padding: 10px;
-        width: 100%;
-    }
-
-    input.tb1-biru {
-        border: none;
-        background-color: #3f71af;
-        border-radius: 20px;
-        margin-top: 20px;
-        padding: 15px 20px 15px 20px;
-        color: white;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    input.tb1-biru:hover {
-        background-color: pink;
-        text-decoration: none;
-    }
-    
-    .error{
-        padding: 20px;
-        background-color: red;
-        color:white;
-        margin: 15px;
-    }
-
-    .sukses{
-        padding: 20px;
-        background-color: blue;
-        color: white;
-        margin: 15px;
-    }
-
-    .error ul{
-        margin-left: 10px;
-    }
-</style>
 
 <h3>Pendaftaran</h3>
 <?php
@@ -69,6 +8,7 @@ $password = "";
 $konfirmasi_password = "";
 $err = "";
 $sukses = "";
+$isi_email = "";
 
 if(isset($_POST['simpan'])){
     $email = $_POST['email'];
@@ -108,7 +48,13 @@ if(isset($_POST['simpan'])){
 
         kirim_email($email, $nama_lengkap, $judul_email, $isi_email);
 
-        $sukses = "Proses berhasil";
+        $sql1 = "insert into members(email, nama_lengkap, password, status) values ('$email', '$nama_lengkap', md5('$password'), '$status')";
+        $q1 = mysqli_query($koneksi, $sql1);
+        if($q1){
+            $sukses = "Proses berhasil. Silahkan cek email untuk verifikasi. ";
+        }
+
+        $sukses .= "Proses berhasil";
     }
 }
 

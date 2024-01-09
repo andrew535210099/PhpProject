@@ -150,15 +150,12 @@ function kirim_email($email_penerima, $nama_penerima, $judul_email, $isi_email)
     $email_pengirim = "andrewpurba54@gmail.com";
     $nama_pengirim = "noreply";
 
-    //Load Composer's autoloader
-    require getcwd() . '/vendor/autoload.php';
-
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
 
     try {
         //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+        $mail->SMTPDebug = 0;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -174,11 +171,9 @@ function kirim_email($email_penerima, $nama_penerima, $judul_email, $isi_email)
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = $judul_email;
-        $mail->Body    = $judul_email;
-        $mail->AltBody = $isi_email;
+        $mail->Body    = $isi_email;
 
         $mail->send();
-        var_dump($_ENV);
         return 'Message has been sent';
     } catch (Exception $e) {
         return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

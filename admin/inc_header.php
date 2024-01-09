@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../inc/inc_koneksi.php");
 include("../inc/inc_fungsi.php");
 ?>
